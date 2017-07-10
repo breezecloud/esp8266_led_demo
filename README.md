@@ -5,36 +5,36 @@
 This is example code for [this blog post](http://jpmens.net/2014/07/03/the-mosquitto-mqtt-broker-gets-websockets-support/).
 
     如何通过浏览器控制ESP8266?这里提供一个方法。可以用mq消息机制，通过消息的方法专递信息给esp8266。原理是浏览器通过websocket接口连接mq服务器，再点击on/off按钮之后发送消息给mq服务器，mq服务器接受到消息之后通过micropython的mqtt库程序将消息传递给esp8266，根据消息内容来打开或者关闭esp8266上的led。
-一、安装mosquitto（在linux环境下）
-<p>
-    mosquitto默认安装不支持websocket，需以下步骤安装
- 	1、下载mosquitto、libwebsockets、cmake
- 	wget http://mosquitto.org/files/source/mosquitto-1.4.12.tar.gz
- 	tar -zxvf mosquitto-1.4.12.tar.gz
- 	useradd mosquitto #需要新建一个用户
- 	git clone https://github.com/warmcat/libwebsockets
-	编译需要cmake
-	所以：apt-get install cmake
-	2、安装
-	完成以后 进入libwebsockets目录
-	mkdir build
-	cd build
-	cmake .. -DOPENSSL_ROOT_DIR=/usr/bin/openssl
-	make
-	sudo make install
-	进入mosquitto目录
-	更改configure.mk中WITH_WEBSOCKETS:=no变成（这一步是做WebSocket支持）WITH_WEBSOCKETS:=yes
-	修改配置，编译。
-	make
-	make install
-	启动：mosquitto -c /etc/mosquitto/mosquitto.conf 
-	有可能找不到动态库，查一下库文件目录，并确保动态库在/etc/ld.so.conf
-	mosquitto安装注意点
-	【1】编译找不到openssl/ssl.h
-	 安装openssl
-	sudo apt-get install libssl-dev
-	【2】编译过程找不到ares.h
-	sudo apt-get install libc-ares-dev
+一、安装mosquitto（在linux环境下）</br>
+
+    mosquitto默认安装不支持websocket，需以下步骤安装</br>
+ 	1、下载mosquitto、libwebsockets、cmake</br>
+ 	wget http://mosquitto.org/files/source/mosquitto-1.4.12.tar.gz</br>
+ 	tar -zxvf mosquitto-1.4.12.tar.gz</br>
+ 	useradd mosquitto #需要新建一个用户</br>
+ 	git clone https://github.com/warmcat/libwebsockets</br>
+	编译需要cmake</br>
+	所以：apt-get install cmake</br>
+	2、安装</br>
+	完成以后 进入libwebsockets目录</br>
+	mkdir build</br>
+	cd build</br>
+	cmake .. -DOPENSSL_ROOT_DIR=/usr/bin/openssl</br>
+	make</br>
+	sudo make install</br>
+	进入mosquitto目录</br>
+	更改configure.mk中WITH_WEBSOCKETS:=no变成（这一步是做WebSocket支持）WITH_WEBSOCKETS:=yes</br>
+	修改配置，编译。</br>
+	make</br>
+	make install</br>
+	启动：mosquitto -c /etc/mosquitto/mosquitto.conf </br>
+	有可能找不到动态库，查一下库文件目录，并确保动态库在/etc/ld.so.conf</br>
+	mosquitto安装注意点</br>
+	【1】编译找不到openssl/ssl.h</br>
+	 安装openssl</br>
+	sudo apt-get install libssl-dev</br>
+	【2】编译过程找不到ares.h</br>
+	sudo apt-get install libc-ares-dev</br>
 	【3】编译过程找不到uuid/uuid.h
 	sudo apt-get install uuid-dev
 	【4】使用过程中找不到libmosquitto.so.1
@@ -47,7 +47,7 @@ This is example code for [this blog post](http://jpmens.net/2014/07/03/the-mosqu
 	【5】make: g++：命令未找到
 	 装g++编译器
 	sudo apt-get install g++
-</p>
+
 二、安装tornado
 	sudo pip install tornado
 
