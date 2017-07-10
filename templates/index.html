@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Mosquitto Websockets</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{ static_url('scripts/mqttws31.js') }}" type="application/javascript"></script>
+    <script src="{{ static_url('scripts/jquery.min.js') }}" type="application/javascript"></script>
+    <script src="{{ static_url('scripts/config.js') }}" type="application/javascript"></script>
+
+    <script type="text/javascript">
+    var mqtt;
+    var reconnectTimeout = 2000;
+
+    function MQTTconnect() {
+        mqtt = new Paho.MQTT.Client(
+                        host,
+                        port,
+                        "web_" + parseInt(Math.random() * 100,
+                        10));
+        var options = {
+            timeout: 3,
+            useSSL: useTLS,
+            cleanSession: cleansession,
+            onSuccess: onConnect,
+            onFailure: function (message) {
+                $('#status').val("Connection failed: " + message.errorMessage + "Retrying");
+                setTimeout(MQTTconnect, reconnectTimeout);
+            }
+        };
+
+        mqtt.onConnectionLost = onConnectionLost;
+        mqtt.onMessageArrived = onMessageArrived;
+
+        if (username != null) {
+            options.userName = username;
+            options.password = password;
+        }
+        console.log("Host="+ host + ", port=" + port + " TLS = " + useTLS + " username=" + username + " password=" + password);
+        mqtt.connect(options);
+    }
+
+    function onConnect() {
+        $('#status').val('Connected to ' + host + ':' + port);
+        // Connection succeeded; subscribe to our topic
+        mqtt.subscribe(topic, {qos: 0});
+        $('#topic').val(topic);
+    }
+
+    function onConnectionLost(response) {
+        setTimeout(MQTTconnect, reconnectTimeout);
+        $('#status').val("connection lost: " + responseObject.errorMessage + ". Reconnecting");
+
+    };
+
+    function onMessageArrived(message) {
+
+        var topic = message.destinationName;
+        var payload = message.payloadString;
+
+        $('#ws').prepend('<li>' + topic + ' = ' + payload + '</li>');
+    };
+
+ 	function button_on_onclick(){
+		  //这里写你要执行的语句  
+		var tp = $('#sendtopic').val();
+		//var val = $('#textsend').val();
+        var val = 'on'
+		if(tp==''||val=='')
+		{
+			alert("no aaa");
+			return;
+		}
+		var message = new Paho.MQTT.Message(val);
+		message.destinationName = tp;
+		message.qos=0;
+		mqtt.send(message);
+//		mqtt.publish(tp, 0, val);
+        $('#ws').prepend('<li>' + tp + ' = ' + val+ '</li>');
+	};
+
+    function button_off_onclick(){
+          //这里写你要执行的语句  
+        var tp = $('#sendtopic').val();
+        //var val = $('#textsend').val();
+        var val = 'off'
+        if(tp==''||val=='')
+        {
+            alert("no aaa");
+            return;
+        }
+        var message = new Paho.MQTT.Message(val);
+        message.destinationName = tp;
+        message.qos=0;
+        mqtt.send(message);
+//      mqtt.publish(tp, 0, val);
+        $('#ws').prepend('<li>' + tp + ' = ' + val+ '</li>');
+    };
+
+    $(document).ready(function() {
+        MQTTconnect();
+    });
+
+    </script>
+  </head>
+  <body>
+    <h1>Mosquitto Websockets demo on esp8266</h1>
+    <div>
+        <div>Subscribed to <input type='text' id='topic' disabled />
+        Status: <input type='text' id='status' size="30" disabled />
+		</br>
+		publish to <input type='text' id='sendtopic' />
+        Status: <input type='button' value="on" id='btn_on' onclick="javascript:button_on_onclick()"/>
+        <input type='button' value="off" id='btn_off' onclick="javascript:button_off_onclick()"/></div>
+	    <ul id='ws' style="font-family: 'Courier New', Courier, monospace;"></ul>
+    </div>
+  </body>
+</html>
