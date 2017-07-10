@@ -6,6 +6,7 @@ This is example code for [this blog post](http://jpmens.net/2014/07/03/the-mosqu
 
     如何通过浏览器控制ESP8266?这里提供一个方法。可以用mq消息机制，通过消息的方法专递信息给esp8266。原理是浏览器通过websocket接口连接mq服务器，再点击on/off按钮之后发送消息给mq服务器，mq服务器接受到消息之后通过micropython的mqtt库程序将消息传递给esp8266，根据消息内容来打开或者关闭esp8266上的led。
 一、安装mosquitto（在linux环境下）
+<p>
     mosquitto默认安装不支持websocket，需以下步骤安装
  	1、下载mosquitto、libwebsockets、cmake
  	wget http://mosquitto.org/files/source/mosquitto-1.4.12.tar.gz
@@ -46,11 +47,12 @@ This is example code for [this blog post](http://jpmens.net/2014/07/03/the-mosqu
 	【5】make: g++：命令未找到
 	 装g++编译器
 	sudo apt-get install g++
-
+</p>
 二、安装tornado
 	sudo pip install tornado
 
 三、下载源代码并测试
+<p>
 	git clone https://github.com/breezecloud/esp8266_led_demo.git或者到 https://github.com/breezecloud/esp8266_led_demo直接下载
 	led_mqtt.py #ESP8266执行程序
 	websocket_led.py #命令行启动tornado程序
@@ -61,3 +63,4 @@ This is example code for [this blog post](http://jpmens.net/2014/07/03/the-mosqu
 	然后登录esp8266，执行import led_mqtt.py。此时可以在linux终端上执行mosquitto_pub -t '/esp8266' -m on和mosquitto_pub -t '/esp8266' -m off测试esp8266是否正常工作
 	在linux终端下执行pythhon websocket_led.py。浏览器http://ip地址:8000（注意：必须支持websocket的浏览器），点击上面的on/off按钮控制led的亮和暗。
 这样一个mini物联网完成了。
+</p>
