@@ -35,32 +35,30 @@ This is example code for [this blog post](http://jpmens.net/2014/07/03/the-mosqu
 	sudo apt-get install libssl-dev</br>
 	【2】编译过程找不到ares.h</br>
 	sudo apt-get install libc-ares-dev</br>
-	【3】编译过程找不到uuid/uuid.h
-	sudo apt-get install uuid-dev
-	【4】使用过程中找不到libmosquitto.so.1
-	error while loading shared libraries: libmosquitto.so.1: cannot open shared object file: No such file or directory
-	修改libmosquitto.so位置
-	# 创建链接
-	sudo ln -s /usr/local/lib/libmosquitto.so.1 /usr/lib/libmosquitto.so.1
-	# 更新动态链接库
-	sudo ldconfig
-	【5】make: g++：命令未找到
-	 装g++编译器
-	sudo apt-get install g++
+	【3】编译过程找不到uuid/uuid.h</br>
+	sudo apt-get install uuid-dev</br>
+	【4】使用过程中找不到libmosquitto.so.1</br>
+	error while loading shared libraries: libmosquitto.so.1: cannot open shared object file: No such file or directory</br>
+	修改libmosquitto.so位置</br>
+	# 创建链接</br>
+	sudo ln -s /usr/local/lib/libmosquitto.so.1 /usr/lib/libmosquitto.so.1</br>
+	# 更新动态链接库</br>
+	sudo ldconfig</br>
+	【5】make: g++：命令未找到</br>
+	 装g++编译器</br>
+	sudo apt-get install g++</br>
 
-二、安装tornado
-	sudo pip install tornado
+二、安装tornado</br>
+	sudo pip install tornado</br>
 
-三、下载源代码并测试
-<p>
-	git clone https://github.com/breezecloud/esp8266_led_demo.git或者到 https://github.com/breezecloud/esp8266_led_demo直接下载
-	led_mqtt.py #ESP8266执行程序
-	websocket_led.py #命令行启动tornado程序
-	templates--index.html #web页面
-	static/scripts--config.js,jquery.min.js,mqttws31.js #javascript库
-	esp8266安装micropython的固件（参考http://blog.sina.com.cn/s/blog_537da9e40102x79k.html）
-	修改led_mqtt.py中ap的ssid和密码，并上传到esp8266(参考http://blog.sina.com.cn/s/blog_537da9e40102x83s.html)
-	然后登录esp8266，执行import led_mqtt.py。此时可以在linux终端上执行mosquitto_pub -t '/esp8266' -m on和mosquitto_pub -t '/esp8266' -m off测试esp8266是否正常工作
-	在linux终端下执行pythhon websocket_led.py。浏览器http://ip地址:8000（注意：必须支持websocket的浏览器），点击上面的on/off按钮控制led的亮和暗。
-这样一个mini物联网完成了。
-</p>
+三、下载源代码并测试</br>
+	git clone https://github.com/breezecloud/esp8266_led_demo.git或者到 https://github.com/breezecloud/esp8266_led_demo直接下载</br>
+	led_mqtt.py #ESP8266执行程序</br>
+	websocket_led.py #命令行启动tornado程序</br>
+	templates--index.html #web页面</br>
+	static/scripts--config.js,jquery.min.js,mqttws31.js #javascript库</br>
+	esp8266安装micropython的固件（参考http://blog.sina.com.cn/s/blog_537da9e40102x79k.html）</br>
+	修改led_mqtt.py中ap的ssid和密码，并上传到esp8266(参考http://blog.sina.com.cn/s/blog_537da9e40102x83s.html)</br>
+	然后登录esp8266，执行import led_mqtt.py。此时可以在linux终端上执行mosquitto_pub -t '/esp8266' -m on和mosquitto_pub -t '/esp8266' -m off测试esp8266是否正常工作</br>
+	在linux终端下执行pythhon websocket_led.py。浏览器http://ip地址:8000（注意：必须支持websocket的浏览器），点击上面的on/off按钮控制led的亮和暗。</br>
+这样一个mini物联网完成了。</br>
