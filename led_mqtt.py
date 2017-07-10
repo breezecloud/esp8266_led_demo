@@ -4,7 +4,7 @@ led_mqtt.py
 在micropython上使用mqtt，默认已经按照了mqtt库，在unix的micropyth无法import time
 本程序改为main.py上传到8266，启动后自动执行，在服务器上启动mosquitto，并用mosquitto_pub -t gpio -m on/off控制LED
 设置ESP8266 WIFI
-启动ESP8266 之后 import led_mqtt 程序运行
+启动ESP8266 之后 import led_mqtt.py 程序运行
 import network
 wlan = network.WLAN(network.STA_IF) # create station interface
 wlan.active(True)       # activate the interface
@@ -27,9 +27,9 @@ def sub_cb(topic, msg):
     if msg == b'off':
         p2.value(1)
 
-server_address = "118.89.144.148" #mqtt 服务器
-ap_essid = 'nubia Z17'
-ap_passwd = 'luping123'
+server_address = "xx.xx.xx.xx" #mqtt 服务器IP
+ap_essid = 'xxxx' #ssid
+ap_passwd = 'xxxx' #password
 
 
 wlan = network.WLAN(network.STA_IF) # create station interface
